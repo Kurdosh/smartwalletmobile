@@ -1,30 +1,33 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <v-app theme="dark">
+    <v-app-bar app>
+      <!-- -->
+    </v-app-bar>
+
+    <!-- Sizes your content based upon application components -->
+    <v-main>
+      <!-- Provides the application the proper gutter -->
+      <v-container fluid>
+        <!-- If using vue-router -->
+        <router-view> </router-view>
+      </v-container>
+    </v-main>
+
+    <v-bottom-navigation v-model="value">
+      <v-btn to="/">
+        <v-icon>mdi-home</v-icon>
+        <span>Главная</span>
+      </v-btn>
+      <v-btn to="/history">
+        <v-icon>mdi-history</v-icon>
+        <span>История</span>
+      </v-btn>
+
+      <v-btn to="/transfer">
+        <v-icon>mdi-swap-vertical</v-icon>
+        <span>Переводы</span>
+      </v-btn>
+    </v-bottom-navigation>
+  </v-app>
   <router-view />
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
