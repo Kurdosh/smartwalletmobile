@@ -9,6 +9,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/MainPage.vue"),
   },
   {
+    path: "/login",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/LoginPage.vue"),
+  },
+  {
     path: "/history",
     name: "history",
     component: () =>
@@ -19,6 +25,30 @@ const routes = [
     name: "transfer",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/TransferPage.vue"),
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/ProfilePage.vue"),
+  },
+  {
+    path: "/account",
+    name: "account",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/AccountPage.vue"),
+  },
+  {
+    path: "/income",
+    name: "income",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/IncomePage.vue"),
+  },
+  {
+    path: "/spending",
+    name: "spending",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/SpendingPage.vue"),
   },
 ];
 

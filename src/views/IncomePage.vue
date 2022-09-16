@@ -1,12 +1,11 @@
 <template>
   <div class="">
-    <h1 class="text-center mt-9">Перевести</h1>
+    <h1 class="text-center mt-9">Пополнить</h1>
     <v-form>
       <v-container>
-        <v-select :items="items" variant="outlined" label="Куда"></v-select>
         <v-text-field
           variant="outlined"
-          v-model="TransferAmount"
+          v-model="IncomeAmount"
           density="compact"
           label="Введите сумму"
           type="number"
@@ -20,7 +19,7 @@
           height="50px"
           width="100%"
         >
-          Перевести
+          Пополнить
         </v-btn>
       </v-container>
     </v-form>
@@ -40,8 +39,7 @@
 export default {
   data() {
     return {
-      TransferAmount: null,
-      items: ["Карта Альфа", "Наличные"],
+      IncomeAmount: null,
     };
   },
 };
