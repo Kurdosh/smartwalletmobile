@@ -1,43 +1,42 @@
 <template>
   <v-app theme="dark">
-    <v-container>
-      <v-app-bar app class="py-3">
-        <v-container>
-          <v-avatar size="50" class="ml-3">
-            <span class="white--text text-h5">{{ userName[0] }}</span>
-          </v-avatar>
-          <v-btn to="/profile">
-            {{ userName }}
-            <v-icon> mdi-chevron-right </v-icon>
-          </v-btn>
-        </v-container>
-      </v-app-bar>
+    <div>
+      <v-container>
+        <v-app-bar app class="py-3" v-if="isLoggedIn">
+          <v-container class="d-flex align-center">
+            <v-avatar size="50" class="ml-3">
+              <span class="white--text text-h5">SM</span>
+            </v-avatar>
+            <v-btn to="/profile">
+              SmartWallet
+              <v-icon> mdi-chevron-right </v-icon>
+            </v-btn>
+            <v-btn class="ml-auto" @click="handleSignOut">Выйти</v-btn>
+          </v-container>
+        </v-app-bar>
+        <v-main>
+          <v-container fluid>
+            <router-view> </router-view>
+          </v-container>
+        </v-main>
+      </v-container>
 
-      <!-- Sizes your content based upon application components -->
-      <v-main>
-        <!-- Provides the application the proper gutter -->
-        <v-container fluid>
-          <!-- If using vue-router -->
-          <router-view> </router-view>
-        </v-container>
-      </v-main>
-    </v-container>
+      <v-bottom-navigation v-model="value">
+        <v-btn to="/">
+          <v-icon>mdi-home</v-icon>
+          <span>Главная</span>
+        </v-btn>
+        <v-btn to="/history">
+          <v-icon>mdi-history</v-icon>
+          <span>История</span>
+        </v-btn>
 
-    <v-bottom-navigation v-model="value">
-      <v-btn to="/">
-        <v-icon>mdi-home</v-icon>
-        <span>Главная</span>
-      </v-btn>
-      <v-btn to="/history">
-        <v-icon>mdi-history</v-icon>
-        <span>История</span>
-      </v-btn>
-
-      <v-btn to="/transfer">
-        <v-icon>mdi-swap-vertical</v-icon>
-        <span>Переводы</span>
-      </v-btn>
-    </v-bottom-navigation>
+        <v-btn to="/transfer">
+          <v-icon>mdi-swap-vertical</v-icon>
+          <span>Переводы</span>
+        </v-btn>
+      </v-bottom-navigation>
+    </div>
   </v-app>
 </template>
 <style>
@@ -56,15 +55,27 @@ html::-webkit-scrollbar {
 }
 </style>
 
-<script>
-export default {
-  name: "App",
-  data() {
-    return {
-      userName: "Федор",
-      balance: 24523.05,
-    };
-  },
-  methods: {},
+<script setup>
+/* eslint-disable */
+import { onMounted, ref } from "vue";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const isLoggedIn = ref(false);
+let auth;
+onMounted(() => {
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isLoggedIn.value = true;
+    } else {
+      isLoggedIn.value = false;
+    }
+  });
+});
+const handleSignOut = () => {
+  signOut(auth).then(() => {
+    router.push("/login");
+  });
 };
 </script>
