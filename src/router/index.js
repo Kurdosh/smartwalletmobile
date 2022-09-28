@@ -65,6 +65,14 @@ const routes = [
     },
   },
   {
+    path: "/add-account",
+    name: "add-account",
+    component: () => import("../views/AddAccount.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/register",
     name: "register",
     component: () => import("../views/RegisterPage.vue"),

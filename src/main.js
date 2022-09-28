@@ -16,6 +16,8 @@ const firebaseConfig = {
   measurementId: "G-D17YT3K7H3",
 };
 
-initializeApp(firebaseConfig);
+const fireabaseApp = initializeApp(firebaseConfig);
 loadFonts();
 createApp(App).use(router).use(store).use(vuetify).mount("#app");
+
+export const db = fireabaseApp.firestore();

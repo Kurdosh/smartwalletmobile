@@ -21,17 +21,17 @@
         </v-main>
       </v-container>
 
-      <v-bottom-navigation v-model="value">
-        <v-btn to="/">
+      <v-bottom-navigation>
+        <v-btn to="/" width="100px">
           <v-icon>mdi-home</v-icon>
           <span>Главная</span>
         </v-btn>
-        <v-btn to="/history">
+        <v-btn to="/history" width="100px">
           <v-icon>mdi-history</v-icon>
           <span>История</span>
         </v-btn>
 
-        <v-btn to="/transfer">
+        <v-btn to="/transfer" width="100px">
           <v-icon>mdi-swap-vertical</v-icon>
           <span>Переводы</span>
         </v-btn>
