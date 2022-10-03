@@ -19,7 +19,7 @@
         ></v-text-field>
 
         <v-btn
-          to="/"
+          @click="addAccount"
           variant="tonal"
           rounded="lg"
           class="block-center my-2"
@@ -39,13 +39,25 @@
 }
 </style>
 
-<script>
-export default {
-  data() {
-    return {
-      AccountName: null,
-      Balance: null,
-    };
-  },
+<script setup>
+/* eslint-disable */
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+const router = useRouter();
+const db = getFirestore();
+const AccountName = ref("");
+const Balance = ref("");
+const addAccount = async () => {
+  await addDoc(collection(db, "accounts"), {
+    name: AccountName.value,
+    balance: Balance.value,
+  })
+    .then((data) => {
+      router.push("/");
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
 };
 </script>

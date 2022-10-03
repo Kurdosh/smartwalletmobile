@@ -19,27 +19,16 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-const accounts = ref([
-  {
-    id: 1,
-    name: "Карта тинькофф",
-    balance: 24523.05,
-  },
-  {
-    id: 2,
-    name: "Карта сбербанк",
-    balance: 3573.65,
-  },
-  {
-    id: 3,
-    name: "Карта альфа",
-    balance: 346.36,
-  },
-  {
-    id: 4,
-    name: "Карта втб",
-    balance: 2.16,
-  },
-]);
+import { ref, onMounted } from "vue";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+const accounts = ref([]);
+const db = getFirestore();
+onMounted(async () => {
+  const querySnapshot = await getDocs(collection(db, "accounts"));
+  const fbAccounts = [];
+  querySnapshot.forEach((doc) => {
+    fbAccounts.push({ id: doc.id, ...doc.data() });
+    accounts.value = fbAccounts;
+  });
+});
 </script>

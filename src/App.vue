@@ -79,3 +79,12 @@ const handleSignOut = () => {
   });
 };
 </script>
+
+<style>
+.v-input__details {
+  display: none;
+}
+.v-field__input {
+  padding-left: 15px !important;
+}
+</style>
