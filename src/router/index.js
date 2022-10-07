@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createRouter, createWebHistory } from "vue-router";
 // import HomeView from "../views/HomeView.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -7,19 +8,16 @@ const routes = [
     path: "/",
     name: "Home",
     component: () => import("../views/MainPage.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
   },
   {
-    path: "/login",
-    name: "login",
-    component: () => import("../views/LoginPage.vue"),
-  },
-  {
     path: "/history",
     name: "history",
     component: () => import("../views/HistoryPage.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
@@ -28,6 +26,7 @@ const routes = [
     path: "/transfer",
     name: "transfer",
     component: () => import("../views/TransferPage.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
@@ -36,14 +35,16 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: () => import("../views/ProfilePage.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
   },
   {
-    path: "/account",
+    path: "/account/:id",
     name: "account",
     component: () => import("../views/AccountPage.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
@@ -52,6 +53,7 @@ const routes = [
     path: "/income",
     name: "income",
     component: () => import("../views/IncomePage.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
@@ -60,6 +62,7 @@ const routes = [
     path: "/spending",
     name: "spending",
     component: () => import("../views/SpendingPage.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
@@ -68,6 +71,7 @@ const routes = [
     path: "/add-account",
     name: "add-account",
     component: () => import("../views/AddAccount.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
@@ -103,7 +107,7 @@ const getCurrentUser = () => {
         removeListener();
         resolve(user);
       },
-      reject
+      reject,
     );
   });
 };

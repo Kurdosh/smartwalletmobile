@@ -44,12 +44,16 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 const router = useRouter();
 const db = getFirestore();
 const AccountName = ref("");
 const Balance = ref("");
+const user = getAuth().currentUser.uid;
+const usersRef = collection(db, "users");
+
 const addAccount = async () => {
-  await addDoc(collection(db, "accounts"), {
+  await addDoc(collection(usersRef, user, "wallets"), {
     name: AccountName.value,
     balance: Balance.value,
   })

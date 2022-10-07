@@ -3,7 +3,7 @@
     class="d-flex flex-column justify-space-between align-center"
     style="height: calc(100vh - 200px)"
   >
-    <h1 class="text-center mt-9">24523.05 ₽</h1>
+    <h1 class="text-center mt-9">{{ balance }} ₽</h1>
     <div class="d-flex flex-column align-center">
       <v-btn
         to="/spending"
@@ -72,12 +72,19 @@
   </v-dialog>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      dialog: false,
-    };
-  },
-};
+<script setup>
+import { doc, getDoc } from "firebase/firestore";
+import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+const id = useRouter().currentRoute.value.params.id;
+const db = getFirestore();
+const user = getAuth().currentUser.uid;
+const balance = ref([]);
+onMounted(async () => {
+  const balanceRef = doc(db, "users", user, "wallets", id);
+  let fbbalance = await getDoc(balanceRef);
+  balance.value = fbbalance.data().balance;
+});
 </script>
