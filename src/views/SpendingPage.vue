@@ -10,14 +10,14 @@
         ></v-select>
         <v-text-field
           variant="outlined"
-          v-model="TransferAmount"
+          v-model="SpendingAmount"
           density="compact"
           label="Введите сумму"
           type="number"
         ></v-text-field>
 
         <v-btn
-          to="/account"
+          @click="addSpending"
           variant="tonal"
           rounded="lg"
           class="block-center my-2"
@@ -55,5 +55,38 @@ export default {
       ],
     };
   },
+};
+</script>
+
+<script setup>
+/* eslint-disable */
+import { useRouter } from "vue-router";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+const router = useRouter();
+const db = getFirestore();
+const user = getAuth().currentUser.uid;
+const usersRef = collection(db, "users");
+const id = useRouter().currentRoute.value.params.id;
+
+const addSpending = async () => {
+  await addDoc(
+    collection(usersRef, user, "wallets", id, "transactions"),
+    {
+      // eslint-disable-next-line no-undef
+      amount: SpendingAmount.value,
+      category: "Продукты",
+      date: new Date(),
+      type: "spending",
+    },
+    { merge: true },
+  )
+    .then((data) => {
+      console.log(data);
+      router.push("/spending");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 </script>

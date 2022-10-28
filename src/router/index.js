@@ -50,7 +50,7 @@ const routes = [
     },
   },
   {
-    path: "/income",
+    path: "/income/:id",
     name: "income",
     component: () => import("../views/IncomePage.vue"),
     props: true,
@@ -59,7 +59,7 @@ const routes = [
     },
   },
   {
-    path: "/spending",
+    path: "/spending/:id",
     name: "spending",
     component: () => import("../views/SpendingPage.vue"),
     props: true,

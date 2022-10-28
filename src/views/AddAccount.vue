@@ -53,10 +53,10 @@ const user = getAuth().currentUser.uid;
 const usersRef = collection(db, "users");
 
 const addAccount = async () => {
-  await addDoc(collection(usersRef, user, "wallets"), {
+  await addDoc(collection(usersRef, user, "wallets"),{
     name: AccountName.value,
     balance: Balance.value,
-  })
+  }, { merge:true })
     .then((data) => {
       router.push("/");
     })

@@ -6,7 +6,6 @@
     <h1 class="text-center mt-9">{{ balance }} ₽</h1>
     <div class="d-flex flex-column align-center">
       <v-btn
-        to="/spending"
         variant="tonal"
         rounded="lg"
         class="block-center my-2"
@@ -14,16 +13,20 @@
         width="300px"
       >
         Добавить трату
+        <router-link :to="{ name: 'spending', params: { id: id } }"
+          >Кнопка
+        </router-link>
       </v-btn>
       <v-btn
-        to="/income"
         variant="tonal"
         rounded="lg"
         class="block-center my-2"
         height="50px"
         width="300px"
-      >
-        Пополнить
+        >Пополнить
+        <router-link :to="{ name: 'income', params: { id: id } }"
+          >Кнопка
+        </router-link>
       </v-btn>
       <v-btn
         to="/transfer"
@@ -66,18 +69,47 @@
 
         <v-btn color="green darken-1" text @click="dialog = false"> Нет </v-btn>
 
-        <v-btn color="green darken-1" text @click="dialog = false"> Да </v-btn>
+        <v-btn
+          color="green darken-1"
+          text
+          @click="(dialog = false), deleteAccount()"
+        >
+          Да
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
+<style scoped>
+.v-btn__content a {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+</style>
+
+<script>
+export default {
+  data() {
+    return {
+      dialog: false,
+    };
+  },
+};
+</script>
+
 <script setup>
-import { doc, getDoc } from "firebase/firestore";
+/* eslint-disable */
+import { doc, getDoc, deleteDoc, getFirestore } from "firebase/firestore";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+const router = useRouter();
 const id = useRouter().currentRoute.value.params.id;
 const db = getFirestore();
 const user = getAuth().currentUser.uid;
@@ -87,4 +119,11 @@ onMounted(async () => {
   let fbbalance = await getDoc(balanceRef);
   balance.value = fbbalance.data().balance;
 });
+
+const deleteAccount = async () => {
+  const accountRef = doc(db, "users", user, "wallets", id);
+  await deleteDoc(accountRef).then(() => {
+    router.push("/");
+  });
+};
 </script>
