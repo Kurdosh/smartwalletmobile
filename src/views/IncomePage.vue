@@ -62,6 +62,7 @@ const addIncome = async () => {
     let fbbalance = await getDoc(balanceRef);
     balance = fbbalance.data().balance;
     balance = Number(balance) + Number(IncomeAmount.value);
+
     await addDoc(collection(usersRef, user, "wallets", id, "transactions"), {
       amount: IncomeAmount.value,
       type: "income",

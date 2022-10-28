@@ -4,6 +4,7 @@
     <v-form>
       <v-container>
         <v-select
+          v-model="selected"
           :items="items"
           variant="outlined"
           label="Категория"
@@ -44,6 +45,7 @@
 export default {
   data() {
     return {
+      selected: "",
       TransferAmount: null,
       items: [
         "Продукты",
@@ -60,33 +62,46 @@ export default {
 
 <script setup>
 /* eslint-disable */
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  addDoc,
+  updateDoc,
+  getFirestore,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const router = useRouter();
 const db = getFirestore();
 const user = getAuth().currentUser.uid;
 const usersRef = collection(db, "users");
 const id = useRouter().currentRoute.value.params.id;
+const SpendingAmount = ref("");
+const selected = ref("");
 
 const addSpending = async () => {
-  await addDoc(
-    collection(usersRef, user, "wallets", id, "transactions"),
-    {
-      // eslint-disable-next-line no-undef
+  if (SpendingAmount.value > 0) {
+    let balance = 0;
+    const balanceRef = doc(db, "users", user, "wallets", id);
+    let fbbalance = await getDoc(balanceRef);
+    balance = fbbalance.data().balance;
+    balance = Number(balance) - Number(SpendingAmount.value);
+
+    await addDoc(collection(usersRef, user, "wallets", id, "transactions"), {
       amount: SpendingAmount.value,
-      category: "Продукты",
-      date: new Date(),
       type: "spending",
-    },
-    { merge: true },
-  )
-    .then((data) => {
-      console.log(data);
-      router.push("/spending");
-    })
-    .catch((error) => {
-      console.log(error);
+      category: selected.value,
+      date: new Date(),
     });
+    await updateDoc(doc(db, "users", user, "wallets", id), {
+      balance: balance,
+    }).then((data) => {
+      router.push("/account/" + id);
+    });
+  } else {
+    alert("Введите сумму");
+  }
 };
 </script>
