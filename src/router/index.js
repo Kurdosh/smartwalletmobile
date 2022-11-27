@@ -23,6 +23,15 @@ const routes = [
     },
   },
   {
+    path: "/history/:id",
+    name: "history",
+    component: () => import("../views/HistoryPage.vue"),
+    props: true,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/transfer",
     name: "transfer",
     component: () => import("../views/TransferPage.vue"),

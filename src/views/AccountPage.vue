@@ -14,7 +14,7 @@
       >
         Добавить трату
         <router-link :to="{ name: 'spending', params: { id: id } }"
-          >Кнопка
+          >Добавить трату
         </router-link>
       </v-btn>
       <v-btn
@@ -25,7 +25,7 @@
         width="300px"
         >Пополнить
         <router-link :to="{ name: 'income', params: { id: id } }"
-          >Кнопка
+          >Пополнить
         </router-link>
       </v-btn>
       <v-btn
@@ -47,6 +47,9 @@
         width="300px"
       >
         Отчет
+        <router-link :to="{ name: 'history', params: { id: id } }"
+          >Отчет
+        </router-link>
       </v-btn>
     </div>
     <v-btn

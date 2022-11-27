@@ -4,11 +4,12 @@
     <v-form>
       <v-container>
         <v-select
-          v-model="selected"
-          :items="items"
-          variant="outlined"
+          v-model="category"
+          :items="categories"
           label="Категория"
-        ></v-select>
+          variant="outlined"
+        >
+        </v-select>
         <v-text-field
           variant="outlined"
           v-model="SpendingAmount"
@@ -43,31 +44,31 @@
 
 <script>
 export default {
-  data() {
-    return {
-      selected: "",
-      TransferAmount: null,
-      items: [
-        "Продукты",
-        "Одежда",
-        "Кафе",
-        "Транспорт",
-        "Развлечения",
-        "Другое",
-      ],
-    };
-  },
+  data: () => ({
+    categories: [
+      "Жилье",
+      "Услуги",
+      "Продукты",
+      "Транспорт",
+      "Развлечения",
+      "Одежда",
+      "Здоровье",
+      "Подарки",
+      "Другое",
+    ],
+  }),
 };
 </script>
 
 <script setup>
 /* eslint-disable */
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import {
   collection,
   doc,
   getDoc,
+  getDocs,
   addDoc,
   updateDoc,
   getFirestore,
@@ -79,7 +80,7 @@ const user = getAuth().currentUser.uid;
 const usersRef = collection(db, "users");
 const id = useRouter().currentRoute.value.params.id;
 const SpendingAmount = ref("");
-const selected = ref("");
+const category = ref("");
 
 const addSpending = async () => {
   if (SpendingAmount.value > 0) {
@@ -92,7 +93,7 @@ const addSpending = async () => {
     await addDoc(collection(usersRef, user, "wallets", id, "transactions"), {
       amount: SpendingAmount.value,
       type: "spending",
-      category: selected.value,
+      category: category.value,
       date: new Date(),
     });
     await updateDoc(doc(db, "users", user, "wallets", id), {
