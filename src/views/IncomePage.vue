@@ -42,7 +42,7 @@ import { useRouter } from "vue-router";
 import {
   doc,
   collection,
-  addDoc,
+  setDoc,
   updateDoc,
   getDoc,
   getFirestore,
@@ -60,10 +60,13 @@ const addIncome = async () => {
     let balance = 0;
     const balanceRef = doc(db, "users", user, "wallets", id);
     let fbbalance = await getDoc(balanceRef);
+    let date = new Date().getTime();
+    date = -date;
+    date = date.toString();
     balance = fbbalance.data().balance;
     balance = Number(balance) + Number(IncomeAmount.value);
 
-    await addDoc(collection(usersRef, user, "wallets", id, "transactions"), {
+    await setDoc(doc(usersRef, user, "wallets", id, "transactions", date), {
       amount: IncomeAmount.value,
       type: "income",
       category: "Пополнение",

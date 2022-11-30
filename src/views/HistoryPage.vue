@@ -9,7 +9,12 @@
         class="mx-auto py-2 d-flex align-center justify-space-between"
         max-width="450"
       >
-        <v-avatar class="ml-4" icon="mdi-train-car"></v-avatar>
+        <v-avatar
+          v-if="transaction.amount > 0"
+          class="ml-4"
+          icon="mdi-arrow-top-right"
+        ></v-avatar>
+        <v-avatar v-else class="ml-4" icon="mdi-arrow-bottom-left"></v-avatar>
         <div>
           <v-card-title
             v-if="transaction.amount < 0"
@@ -65,5 +70,9 @@ onMounted(async () => {
 .v-img__img {
   width: 40px !important;
   height: 40px !important;
+}
+
+.v-icon {
+  color: #fff !important;
 }
 </style>

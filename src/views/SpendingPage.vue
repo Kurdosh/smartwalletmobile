@@ -69,8 +69,6 @@ import {
   doc,
   setDoc,
   getDoc,
-  getDocs,
-  addDoc,
   updateDoc,
   getFirestore,
 } from "firebase/firestore";
