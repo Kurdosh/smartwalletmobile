@@ -1,7 +1,10 @@
 <template>
   <h1 class="text-center">История</h1>
   <div class="history mt-3">
-    <div v-for="transaction in transactions" :key="transaction.date">
+    <div
+      v-for="transaction in transactions.slice().reverse()"
+      :key="transaction.date"
+    >
       <v-card
         class="mx-auto py-2 d-flex align-center justify-space-between"
         max-width="450"

@@ -66,6 +66,7 @@ const addIncome = async () => {
     await addDoc(collection(usersRef, user, "wallets", id, "transactions"), {
       amount: IncomeAmount.value,
       type: "income",
+      category: "Пополнение",
       date: new Date(),
     });
     await updateDoc(doc(db, "users", user, "wallets", id), {

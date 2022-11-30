@@ -67,6 +67,7 @@ import { useRouter } from "vue-router";
 import {
   collection,
   doc,
+  setDoc,
   getDoc,
   getDocs,
   addDoc,
@@ -86,12 +87,15 @@ const addSpending = async () => {
   if (SpendingAmount.value > 0) {
     let balance = 0;
     const balanceRef = doc(db, "users", user, "wallets", id);
+    let date = new Date().getTime();
+    date = -date;
+    date = date.toString();
     let fbbalance = await getDoc(balanceRef);
     balance = fbbalance.data().balance;
     balance = Number(balance) - Number(SpendingAmount.value);
 
-    await addDoc(collection(usersRef, user, "wallets", id, "transactions"), {
-      amount: SpendingAmount.value,
+    await setDoc(doc(usersRef, user, "wallets", id, "transactions", date), {
+      amount: -SpendingAmount.value,
       type: "spending",
       category: category.value,
       date: new Date(),
