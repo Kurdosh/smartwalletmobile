@@ -14,9 +14,9 @@ const routes = [
     },
   },
   {
-    path: "/history",
-    name: "history",
-    component: () => import("../views/HistoryPage.vue"),
+    path: "/general-history",
+    name: "general-history",
+    component: () => import("../views/GeneralHistoryPage.vue"),
     props: true,
     meta: {
       requiresAuth: true,

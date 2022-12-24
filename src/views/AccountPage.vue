@@ -46,9 +46,9 @@
         height="50px"
         width="300px"
       >
-        Отчет
+        История
         <router-link :to="{ name: 'history', params: { id: id } }"
-          >Отчет
+          >История
         </router-link>
       </v-btn>
     </div>

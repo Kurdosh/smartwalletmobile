@@ -26,7 +26,7 @@
           <v-icon>mdi-home</v-icon>
           <span>Главная</span>
         </v-btn>
-        <v-btn to="/history" width="100px">
+        <v-btn to="/general-history" width="100px">
           <v-icon>mdi-history</v-icon>
           <span>История</span>
         </v-btn>

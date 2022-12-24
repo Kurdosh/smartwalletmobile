@@ -43,7 +43,7 @@
 /* eslint-disable */
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { collection, doc, setDoc, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const router = useRouter();
 const db = getFirestore();
@@ -51,12 +51,18 @@ const AccountName = ref("");
 const Balance = ref("");
 const user = getAuth().currentUser.uid;
 const usersRef = collection(db, "users");
+let date = new Date().getTime();
+date = date.toString();
 
 const addAccount = async () => {
-  await addDoc(collection(usersRef, user, "wallets"),{
-    name: AccountName.value,
-    balance: Balance.value,
-  }, { merge:true })
+  await setDoc(
+    doc(usersRef, user, "wallets", date),
+    {
+      name: AccountName.value,
+      balance: Balance.value,
+    },
+    { merge: true },
+  )
     .then((data) => {
       router.push("/");
     })
