@@ -62,8 +62,8 @@ onMounted(async () => {
     const querySnapshot = await getDocs(
       collection(
         db,
-        `users/${user}/wallets/${wallets.value[i].id}/transactions`,
-      ),
+        `users/${user}/wallets/${wallets.value[i].id}/transactions`
+      )
     );
     const fbTransactions = [];
     querySnapshot.forEach((doc) => {
@@ -71,7 +71,7 @@ onMounted(async () => {
     });
     fbTransactions.forEach((transaction) => {
       transaction.date = new Date(transaction.date.seconds * 1000);
-      transactions.value.push(...fbTransactions);
+      transactions.value.push(transaction);
     });
   }
 });

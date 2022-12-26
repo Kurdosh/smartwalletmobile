@@ -4,6 +4,7 @@
     <v-form>
       <v-container>
         <v-select
+          class="mb-2"
           v-model="category"
           :items="categories"
           label="Категория"

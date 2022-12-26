@@ -17,7 +17,7 @@
         type="password"
       ></v-text-field>
       <v-btn @click="register" class="my-4"> Зарегистрироваться </v-btn>
-      <v-btn @click="signInWithGoogle"> Войти с помощью google </v-btn>
+      <!-- <v-btn @click="signInWithGoogle"> Войти с помощью google </v-btn> -->
       <v-btn variant="text" to="/login">Уже есть аккаунт</v-btn>
     </v-form>
   </main>
@@ -29,8 +29,8 @@ import { ref } from "vue";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithRedirect,
+  // GoogleAuthProvider,
+  // signInWithRedirect,
 } from "firebase/auth";
 import { useRouter } from "vue-router";
 const email = ref("");
@@ -50,14 +50,14 @@ const register = () => {
       //   alert(error.message);
     });
 };
-const signInWithGoogle = () => {
-  const provider = new GoogleAuthProvider();
-  signInWithRedirect(auth, provider)
-    .then((result) => {
-      router.push("/");
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
+// const signInWithGoogle = () => {
+//   const provider = new GoogleAuthProvider();
+//   signInWithRedirect(auth, provider)
+//     .then((result) => {
+//       router.push("/");
+//     })
+//     .catch((error) => {
+//       alert(error.message);
+//     });
+// };
 </script>

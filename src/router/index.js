@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 // import HomeView from "../views/HomeView.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -26,15 +26,6 @@ const routes = [
     path: "/history/:id",
     name: "history",
     component: () => import("../views/HistoryPage.vue"),
-    props: true,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: "/transfer",
-    name: "transfer",
-    component: () => import("../views/TransferPage.vue"),
     props: true,
     meta: {
       requiresAuth: true,
@@ -104,7 +95,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes,
 });
 
@@ -116,7 +107,7 @@ const getCurrentUser = () => {
         removeListener();
         resolve(user);
       },
-      reject,
+      reject
     );
   });
 };

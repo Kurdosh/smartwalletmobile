@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="d-flex flex-column justify-space-between align-center"
-    style="height: calc(100vh - 200px)"
-  >
+  <div class="wrapper d-flex flex-column justify-space-between align-center">
     <h1 class="text-center mt-9">{{ balance }} ₽</h1>
     <div class="d-flex flex-column align-center">
       <v-btn
@@ -27,16 +24,6 @@
         <router-link :to="{ name: 'income', params: { id: id } }"
           >Пополнить
         </router-link>
-      </v-btn>
-      <v-btn
-        to="/transfer"
-        variant="tonal"
-        rounded="lg"
-        class="block-center my-2"
-        height="50px"
-        width="300px"
-      >
-        Перевести
       </v-btn>
       <v-btn
         to="/history"
@@ -85,6 +72,9 @@
 </template>
 
 <style scoped>
+.wrapper {
+  min-height: calc(100vh - 200px);
+}
 .v-btn__content a {
   position: absolute;
   opacity: 0;

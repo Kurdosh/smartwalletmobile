@@ -30,11 +30,6 @@
           <v-icon>mdi-history</v-icon>
           <span>История</span>
         </v-btn>
-
-        <v-btn to="/transfer" width="100px">
-          <v-icon>mdi-swap-vertical</v-icon>
-          <span>Переводы</span>
-        </v-btn>
       </v-bottom-navigation>
     </div>
   </v-app>
